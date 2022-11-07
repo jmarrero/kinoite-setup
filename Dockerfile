@@ -1,6 +1,4 @@
-FROM ghcr.io/cgwalters/fedora-silverblue:37
-#Add vscode repo
-RUN echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/code.repo
+FROM quay.io/fedora/fedora-silverblue:39
 RUN rpm-ostree install \
     # sign git tags for releases
     git-evtag \
@@ -9,15 +7,16 @@ RUN rpm-ostree install \
     # kerberos auth
     krb5-workstation \
     # run local qemu vms
-    libvirt-daemon-config-network libvirt-daemon-kvm qemu-kvm util-linux-user \
+    libvirt-daemon-config-network libvirt-daemon-kvm qemu-kvm \
     virt-install virt-manager virt-viewer \
     # dev tools
-    make xsel \
+    make xsel strace \
     # preffered tools
-    zsh neofetch \
+    neofetch gnome-tweak-tool util-linux-user fish gnome-console \
     # logitech mouse/keyboard pairing
     solaar \
-    # third party
-    code \
-    # rpm-ostree cleanup and verification stage
-    && rpm-ostree cleanup -m && ostree container commit
+    # remove gnome-terminal
+    && rpm-ostree override remove gnome-terminal-nautilus gnome-terminal \
+    # cleanup and verification stage
+    && rm -rf /var/lib/unbound \
+    && ostree container commit
