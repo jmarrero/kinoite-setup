@@ -1,10 +1,11 @@
-This is was silverblue setup using OSTree Native Container.
+This is my Kinoite (Atomic Desktop) setup using Bootable Containers (bootc) technology,
+previously known as OSTree Native Container technology.
 
-This builds the ./Dockerfile with podman.
+The setup builds the ./Containerfile using buildah.
 
-They used to be pushed to:
-`ghcr.io/jmarrero/jmarrero-silverblue:latest`
+The resulting build is pushed to:
+ghcr.io/jmarrero/jmarrero-silverblue:latest
 
-There are examples, replacing packages, installing kernel modules and much more at:
-https://github.com/coreos/layering-examples
-CoreOS layering examples should work with Silverblue by changing the base image.
+You can find examples of replacing packages, installing kernel modules, and more at the:
+[CoreOS Layering Examples](https://github.com/coreos/layering-examples) repo. 
+Most CoreOS layering examples should work with Atomic desktops by changing the base image.
